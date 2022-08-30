@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "assignment-3-barangezenoglu1",
+    "slug": "assignment-3-barangezenoglu1",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "assignment-3-barangezenoglu1"
+}
