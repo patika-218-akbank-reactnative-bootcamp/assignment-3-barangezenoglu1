@@ -1,21 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useContext } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { UserContext } from "./src/context/UserContext";
+import { UserProvider } from "./src/context/UserProvider";
+import { LoginScreen } from "./src/screens/LoginScreen";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello world</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UserProvider>
+      <View>
+        <LoginScreen />
+      </View>
+    </UserProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
