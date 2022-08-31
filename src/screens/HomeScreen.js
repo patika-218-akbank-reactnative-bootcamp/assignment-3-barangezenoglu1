@@ -5,7 +5,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-export const HomeScreen = ({navigation}) => {
+
+export const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <View style={styles.container}>
@@ -18,7 +19,10 @@ export const HomeScreen = ({navigation}) => {
           </View>
           <Ionicons style={styles.searchIcon} name="search-outline" />
         </View>
-        <Pressable style={styles.contactsContainer} onPress={() => navigation.navigate("Contacts")}>
+        <Pressable
+          style={styles.contactsContainer}
+          onPress={() => navigation.navigate("Contacts")}
+        >
           <MaterialCommunityIcons name="pencil" style={styles.contactsIcon} />
         </Pressable>
       </View>
