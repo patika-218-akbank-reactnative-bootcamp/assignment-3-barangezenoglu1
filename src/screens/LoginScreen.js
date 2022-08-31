@@ -14,12 +14,13 @@ import TelegramLogo from "../assets/telegram.png";
 import { CountrySelector } from "../components/CountrySelector";
 import { ContryTelephoneSelector } from "../components/CountryTelephoneSelector";
 import { countries } from "../data/countries";
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState(countries[0].name);
   const [selectedNumber, setSelectedNumber] = useState();
   const { user, setUser } = useContext(UserContext);
-  console.log('user', user)
-
+  const isUserEmpty = (obj) => {
+    return !Object.values(obj).every((element) => element !== null);
+  };
   useEffect(() => {
     const autoSelectedNumber = countries.find(
       (country) => country?.code === selectedCountry
@@ -47,20 +48,32 @@ export const LoginScreen = () => {
               selectedNumber={selectedNumber}
               setSelectedNumber={setSelectedNumber}
             />
-            <TextInput style={styles.number} placeholder={"Type your number"} value={user.userTelephoneNumber} onChangeText={(text) => setUser({...user, userTelephoneNumber: text})}  />
+            <TextInput
+              style={styles.number}
+              placeholder={"Type your number"}
+              value={user.userTelephoneNumber}
+              onChangeText={(text) =>
+                setUser({ ...user, userTelephoneNumber: text })
+              }
+            />
           </View>
         </View>
         <View style={styles.nameContainer}>
-          <TextInput style={styles.userName} value={user.userName} onChangeText={(text) => setUser({...user, userName: text})} placeholder={"Type your name"} />
+          <TextInput
+            style={styles.userName}
+            value={user.userName}
+            onChangeText={(text) => setUser({ ...user, userName: text })}
+            placeholder={"Type your name"}
+          />
           <TextInput
             style={styles.userName}
             placeholder={"Type your surname"}
             value={user.userSurname}
-            onChangeText={(text) => setUser({...user, userSurname: text})}
+            onChangeText={(text) => setUser({ ...user, userSurname: text })}
           />
         </View>
         <TouchableOpacity style={styles.loginButtonContainer}>
-          <Button title="Login" />
+          <Button title="Login" onPress={isUserEmpty(user) ? null : () => navigation.navigate("Home")} />
         </TouchableOpacity>
       </View>
     </View>
@@ -107,19 +120,19 @@ const styles = StyleSheet.create({
     width: 200,
   },
   nameContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
     width: 400,
-    marginBottom: 30
+    marginBottom: 30,
   },
   userName: {
     height: 40,
-    width: '40%',
+    width: "40%",
     margin: 12,
     borderWidth: 1,
     borderRadius: 10,
     alignItems: "center",
-    paddingLeft: 10
+    paddingLeft: 10,
   },
 });
