@@ -5,7 +5,8 @@ import { UserProvider } from "./src/context/UserProvider";
 import { LoginScreen } from "./src/screens/LoginScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeScreen } from "./src/screens/HomeScreen";
-import { Contacts } from "./src/screens/Contacts";
+import { ContactsScreen } from "./src/screens/ContactsScreen";
+import { ChatDetail } from "./src/screens/ChatDetail";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -16,7 +17,8 @@ export default function App() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Contacts" component={Contacts} />
+          <Stack.Screen name="Contacts" component={ContactsScreen} />
+          <Stack.Screen name="ChatDetail" component={ChatDetail} />
         </Stack.Navigator>
       </UserProvider>
     </NavigationContainer>
