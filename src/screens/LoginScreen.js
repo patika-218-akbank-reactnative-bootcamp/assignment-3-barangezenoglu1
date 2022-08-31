@@ -73,7 +73,7 @@ export const LoginScreen = ({ navigation }) => {
           />
         </View>
         <TouchableOpacity style={styles.loginButtonContainer}>
-          <Button title="Login" onPress={isUserEmpty(user) ? null : () => navigation.navigate("Home")} />
+          <Button title="Login" onPress={/* isUserEmpty(user) ? null :  */() => navigation.navigate("Home")} />
         </TouchableOpacity>
       </View>
     </View>
