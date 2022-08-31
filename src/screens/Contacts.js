@@ -3,6 +3,6 @@ import { Text } from "react-native";
 
 export const Contacts = () => {
     return (
-        <Text>Contact List</Text>
+        <Text>Contacts</Text>
     )
 }
