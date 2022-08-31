@@ -25,6 +25,7 @@ export const Contact = ({ userName, lastSeen, profilePhoto, navigation }) => {
       width: 70,
       height: 70,
       marginRight: 20,
+      borderRadius: 50
     },
     textContainer: {
       display: "flex",
@@ -49,7 +50,7 @@ export const Contact = ({ userName, lastSeen, profilePhoto, navigation }) => {
         lastSeen,
         profilePhoto
     })} >
-      <Image style={styles.profilePhoto} source={profilePhoto} />
+      <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
       <View style={styles.textContainer}>
         <Text style={styles.userName}>{userName}</Text>
         <Text>{lastSeen}</Text>
