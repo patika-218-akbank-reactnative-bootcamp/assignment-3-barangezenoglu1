@@ -10,7 +10,7 @@ export const ContactsScreen = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.leftContainer}>
-          <Pressable onPress={() => console.log("baran baba")}>
+          <Pressable onPress={() => navigation.goBack()}>
             <Ionicons style={styles.backIcon} name="arrow-back" />
           </Pressable>
           <Text style={styles.title}>New Message</Text>

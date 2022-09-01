@@ -1,10 +1,10 @@
 import React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Contact } from "./Contact";
 import { contacts } from "../data/contactList";
 export const ContactList = ({navigation}) => {
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.contentContainerStyle} >
       {contacts.map((contact) => {
        return <Contact
           key={contact.id}
@@ -17,3 +17,9 @@ export const ContactList = ({navigation}) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  contentContainerStyle: {
+    paddingBottom: 80
+  }
+})
