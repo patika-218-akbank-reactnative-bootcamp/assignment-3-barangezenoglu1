@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { ContactContext } from "../context/ContactContext";
 import { Contact } from "./Contact";
-import { contacts } from "../data/contactList";
 export const ContactList = ({navigation}) => {
+  const {contacts} = useContext(ContactContext);
   return (
     <ScrollView contentContainerStyle={styles.contentContainerStyle} >
       {contacts.map((contact) => {
@@ -11,6 +12,7 @@ export const ContactList = ({navigation}) => {
           userName={contact.userName}
           profilePhoto={contact.profilePhoto}
           lastSeen={contact.lastSeen}
+          messageList={contact.messageList}
           navigation={navigation}
         />;
       })}

@@ -8,7 +8,7 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
-
+const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 
 export const ChatInput = () => {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     inputAndImage: {
         display: "flex",
         flexDirection: "row",
-        top: 500,
+        top: 0,
       },
       textInputContainer: {
         backgroundColor: "white",
