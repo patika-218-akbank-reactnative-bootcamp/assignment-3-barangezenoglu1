@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,8 @@ import {
 import Logo from "../assets/telegram.png";
 const windowWidth = Dimensions.get("window").width;
 
-export const Contact = ({ userName, lastSeen, profilePhoto, navigation }) => {
+export const Contact = ({ userName, lastSeen, profilePhoto, navigation, messageList}) => {
+
   const styles = StyleSheet.create({
     container: {
       width: windowWidth,
@@ -48,7 +49,8 @@ export const Contact = ({ userName, lastSeen, profilePhoto, navigation }) => {
     <Pressable style={styles.container} onPress={() => navigation.navigate("ChatDetail", {
         userName,
         lastSeen,
-        profilePhoto
+        profilePhoto,
+        messageList
     })} >
       <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
       <View style={styles.textContainer}>

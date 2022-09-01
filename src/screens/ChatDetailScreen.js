@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Image,
   StyleSheet,
@@ -7,16 +7,36 @@ import {
   Dimensions,
   Pressable,
   ImageBackground,
+  ScrollView,
 } from "react-native";
 import TelegramBackGround from "../assets/telegramBackGround.png";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Foundation from "react-native-vector-icons/Foundation";
 import Entypo from "react-native-vector-icons/Entypo";
 import { ChatInput } from "../components/ChatInput";
+import { ContactContext } from "../context/ContactContext";
+import { TextBox } from "../components/TextBox";
 
 const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 export const ChatDetailScreen = ({ route, navigation }) => {
-  const { userName, profilePhoto, lastSeen } = route.params;
+  const { contacts } = useContext(ContactContext);
+  const { userName, profilePhoto, lastSeen, messageList } = route.params;
+  const dummyMessages = [
+    {
+      id: 1,
+      sender: userName,
+      message: "baran ababababababababab",
+    },
+    {
+      id: 2,
+      sender: userName,
+      message: "Ali Domal",
+    },
+  ];
+  messageList.push(...dummyMessages);
+  console.log("messageList", messageList);
+  console.log("contacts", JSON.stringify(contacts, undefined, 2));
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -35,23 +55,26 @@ export const ChatDetailScreen = ({ route, navigation }) => {
           <Entypo name="dots-three-vertical" style={styles.icon} />
         </View>
       </View>
-      <View>
-        <ImageBackground
-          source={TelegramBackGround}
-          resizeMode="cover"
-          style={styles.imageBackground}
-        >
-          <ChatInput />
-        </ImageBackground>
-      </View>
+
+      <ImageBackground
+        source={TelegramBackGround}
+        resizeMode="cover"
+        style={styles.imageBackground}
+      >
+        <ScrollView style={{flex: 1}}>
+          {messageList.map((message) => {
+            return <TextBox key={message.id} message={message.message} />
+          })}
+        </ScrollView>
+
+        <ChatInput />
+      </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {width: windowWidth, height: windowHeight},
   headerContainer: {
     display: "flex",
     flexDirection: "row",
@@ -103,6 +126,5 @@ const styles = StyleSheet.create({
   imageBackground: {
     height: 570,
     flex: 1,
-    position: "relative",
   },
 });

@@ -7,11 +7,12 @@ function contactListGenerator(number) {
       userName: `User${i}`,
       profilePhoto: `https://xsgames.co/randomusers/assets/avatars/male/${i}.jpg`,
       lastSeen: "Last seen 2023",
+      messageList: []
     };
     data.push(filledList);
   };
   return data;
 }
 
-export const contacts = contactListGenerator(20);
+export const preparedContacts = contactListGenerator(20);
 
