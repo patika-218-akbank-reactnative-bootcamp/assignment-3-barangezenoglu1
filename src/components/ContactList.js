@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { ContactContext } from "../context/ContactContext";
 import { Contact } from "./Contact";
 export const ContactList = ({navigation}) => {
-  const {contacts} = useContext(ContactContext);
+  const {contacts, setContacts} = useContext(ContactContext);
   return (
     <ScrollView contentContainerStyle={styles.contentContainerStyle} >
       {contacts.map((contact) => {
@@ -14,6 +14,7 @@ export const ContactList = ({navigation}) => {
           lastSeen={contact.lastSeen}
           messageList={contact.messageList}
           navigation={navigation}
+          setContacts={setContacts}
         />;
       })}
     </ScrollView>

@@ -11,11 +11,13 @@ export const TextBox = ({ message }) => {
 
 const styles = StyleSheet.create({
   textBox: {
+    position: 'relative',
     width: 250,
-    backgroundColor: "white",
+    backgroundColor: "#BFF0AD",
     padding: 15,
     margin: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     top: 5,
+    left: '32%'
   },
 });

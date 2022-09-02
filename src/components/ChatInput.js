@@ -11,7 +11,7 @@ import Feather from "react-native-vector-icons/Feather";
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 
-export const ChatInput = () => {
+export const ChatInput = ({onSubmitted, changeTextHandler, inputValue}) => {
     return (
         <View style={styles.inputAndImage}>
         <View style={styles.textInputContainer}>
@@ -21,6 +21,9 @@ export const ChatInput = () => {
               style={styles.textInput}
               placeholder="Type a message"
               placeholderTextColor="#000"
+              onSubmitEditing={(event) => onSubmitted(event.nativeEvent.text)}
+              onChangeText={(text) => changeTextHandler(text)}
+              value={inputValue}
             />
           </View>
           <View style={styles.inputContainer}>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -16,27 +16,30 @@ import Entypo from "react-native-vector-icons/Entypo";
 import { ChatInput } from "../components/ChatInput";
 import { ContactContext } from "../context/ContactContext";
 import { TextBox } from "../components/TextBox";
+import { useForceUpdate } from "../hooks/forceUpdate";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export const ChatDetailScreen = ({ route, navigation }) => {
+  const forceUpdate = useForceUpdate();
+  const [inputText, setInputText] = useState('');
   const { contacts } = useContext(ContactContext);
   const { userName, profilePhoto, lastSeen, messageList } = route.params;
-  const dummyMessages = [
-    {
-      id: 1,
+  const changeTextHandler = (text) => {
+    
+    setInputText(text)
+  }
+  const handleSubmitInput = (input) => {
+    let msgObj = {
+      id: Math.random(),
       sender: userName,
-      message: "baran ababababababababab",
-    },
-    {
-      id: 2,
-      sender: userName,
-      message: "Ali Domal",
-    },
-  ];
-  messageList.push(...dummyMessages);
-  console.log("messageList", messageList);
-  console.log("contacts", JSON.stringify(contacts, undefined, 2));
+      message: input,
+    };
+    messageList.push(msgObj);
+    forceUpdate();
+    setInputText('');
+    return contacts;
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -61,20 +64,19 @@ export const ChatDetailScreen = ({ route, navigation }) => {
         resizeMode="cover"
         style={styles.imageBackground}
       >
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}>
           {messageList.map((message) => {
-            return <TextBox key={message.id} message={message.message} />
+            return <TextBox key={message.id} message={message.message} />;
           })}
         </ScrollView>
-
-        <ChatInput />
+        <ChatInput onSubmitted={() => handleSubmitInput(inputText)} changeTextHandler={changeTextHandler} inputValue={inputText} />
       </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {width: windowWidth, height: windowHeight},
+  container: { width: windowWidth, height: windowHeight },
   headerContainer: {
     display: "flex",
     flexDirection: "row",
