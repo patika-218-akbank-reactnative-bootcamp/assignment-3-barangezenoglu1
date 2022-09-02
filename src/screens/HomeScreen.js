@@ -1,15 +1,29 @@
-import react, { useContext } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import react, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ContactedList } from "../components/ContactedList";
+import { ContactContext } from "../context/ContactContext";
 import { MessagesContext } from "../context/MessagesContext";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const HomeScreen = ({ navigation }) => {
-  const {messages} = useContext(MessagesContext);
-  console.log('Messages in home scrren', JSON.stringify(messages, undefined, 2));
+  const { contacts } = useContext(ContactContext);
+  const { messages } = useContext(MessagesContext);
+  const isFocused = useIsFocused();
+  console.log("rendered");
+  const contactedPeople = contacts.filter((contact) => {
+    return messages.some((message) => {
+      return message.reciever === contact.contactName;
+    });
+  });
+  console.log("contactedPeople", JSON.stringify(contactedPeople, undefined, 2));
+  useEffect(() => {
+    isFocused && console.log(messages);
+  }, [isFocused]);
   return (
     <View>
       <View style={styles.container}>
@@ -21,6 +35,9 @@ export const HomeScreen = ({ navigation }) => {
             <Text style={styles.title}>Telegram</Text>
           </View>
           <Ionicons style={styles.searchIcon} name="search-outline" />
+        </View>
+        <View>
+          <ContactedList navigation={navigation} contactedList={contactedPeople} />
         </View>
         <Pressable
           style={styles.contactsContainer}

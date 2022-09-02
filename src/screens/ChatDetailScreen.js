@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -21,6 +21,7 @@ import { UserContext } from "../context/UserContext";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export const ChatDetailScreen = ({ route, navigation }) => {
+  const scrollViewRef = useRef();
   const { messages, setMesages } = useContext(MessagesContext);
   const [updatedMessages, setUpdatedMessages] = useState(messages);
   const { user } = useContext(UserContext);
@@ -43,7 +44,7 @@ export const ChatDetailScreen = ({ route, navigation }) => {
     sentMessages.push(msgObj);
     setUpdatedMessages(sentMessages);
     setInputText("");
-  }; 
+  };
   useEffect(() => {
     setMesages(updatedMessages);
   }, [updatedMessages]);
@@ -71,7 +72,13 @@ export const ChatDetailScreen = ({ route, navigation }) => {
         resizeMode="cover"
         style={styles.imageBackground}
       >
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+         
+          ref={scrollViewRef}
+          onContentSizeChange={() =>
+            scrollViewRef.current.scrollToEnd({ animated: true })
+          }
+        >
           {currentChat?.map((msgInfo) => {
             return <TextBox key={msgInfo?.id} message={msgInfo?.message} />;
           })}
