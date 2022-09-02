@@ -14,27 +14,25 @@ export const HomeScreen = ({ navigation }) => {
   const { contacts } = useContext(ContactContext);
   const { messages } = useContext(MessagesContext);
   const isFocused = useIsFocused();
-  console.log("rendered");
   const contactedPeople = contacts.filter((contact) => {
     return messages.some((message) => {
       return message.reciever === contact.contactName;
     });
   });
-  console.log("contactedPeople", JSON.stringify(contactedPeople, undefined, 2));
   useEffect(() => {
-    isFocused && console.log(messages);
+    isFocused
   }, [isFocused]);
   return (
     <View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <View style={styles.leftContainer}>
-            <Pressable onPress={() => console.log("baran baba")}>
-              <Ionicons style={styles.tabIcon} name="reorder-three" />
+            <Pressable onPress={() => navigation.navigate("Settings")}>
+              <Ionicons style={styles.tabIcon} name="settings-outline" />
             </Pressable>
             <Text style={styles.title}>Telegram</Text>
           </View>
-          <Ionicons style={styles.searchIcon} name="search-outline" />
+          <Ionicons style={styles.searchIcon} name="cloudy-night-outline" />
         </View>
         <View>
           <ContactedList navigation={navigation} contactedList={contactedPeople} />
@@ -67,16 +65,18 @@ const styles = StyleSheet.create({
   leftContainer: {
     display: "flex",
     flexDirection: "row",
+    alignItems: 'center',
     paddingLeft: 5,
   },
   title: {
     color: "white",
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
-    marginTop: 8,
+    marginTop: 5,
+    marginBottom: 5
   },
   tabIcon: {
-    fontSize: 45,
+    fontSize: 35,
     marginRight: 30,
     color: "white",
   },

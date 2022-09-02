@@ -14,12 +14,16 @@ import TelegramLogo from "../assets/telegram.png";
 import { CountrySelector } from "../components/CountrySelector";
 import { ContryTelephoneSelector } from "../components/CountryTelephoneSelector";
 import { countries } from "../data/countries";
+import { useIsFocused } from "@react-navigation/native";
 export const LoginScreen = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState(countries[0].name);
   const [selectedNumber, setSelectedNumber] = useState();
   const { user, setUser } = useContext(UserContext);
+  const isFocused = useIsFocused();
   const isUserEmpty = (obj) => {
-    return !Object.values(obj).every((element) => element !== null);
+    if (obj === null) {
+      return true;
+    } else return !Object.values(obj).every((element) => element !== "");
   };
   useEffect(() => {
     const autoSelectedNumber = countries.find(
@@ -27,7 +31,9 @@ export const LoginScreen = ({ navigation }) => {
     )?.dial_code;
     setSelectedNumber(autoSelectedNumber);
   }, [selectedCountry]);
-
+  useEffect(() => {
+    isFocused;
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <View style={styles.titleLogoContainer}>
@@ -60,9 +66,9 @@ export const LoginScreen = ({ navigation }) => {
         </View>
         <View style={styles.nameContainer}>
           <TextInput
-            style={styles.contactName}
-            value={user.contactName}
-            onChangeText={(text) => setUser({ ...user, contactName: text })}
+            style={styles.userName}
+            value={user.userName}
+            onChangeText={(text) => setUser({ ...user, userName: text })}
             placeholder={"Type your name"}
           />
           <TextInput
@@ -73,7 +79,12 @@ export const LoginScreen = ({ navigation }) => {
           />
         </View>
         <TouchableOpacity style={styles.loginButtonContainer}>
-          <Button title="Login" onPress={/* isUserEmpty(user) ? null :  */() => navigation.navigate("Home")} />
+          <Button
+            title="Login"
+            onPress={
+              isUserEmpty(user) ? null : () => navigation.navigate("Home")
+            }
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -126,7 +137,7 @@ const styles = StyleSheet.create({
     width: 400,
     marginBottom: 30,
   },
-  contactName: {
+  userName: {
     height: 40,
     width: "40%",
     margin: 12,

@@ -9,6 +9,7 @@ import { ContactsScreen } from "./src/screens/ContactsScreen";
 import { ChatDetailScreen } from "./src/screens/ChatDetailScreen";
 import { ContactProvider } from "./src/context/ContactProvider";
 import { MessagesProvider } from "./src/context/MessagesProvider";
+import { SettingsScreen } from "./src/screens/SettingsScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ export default function App() {
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Contacts" component={ContactsScreen} />
               <Stack.Screen name="ChatDetail" component={ChatDetailScreen} />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
             </Stack.Navigator>
           </MessagesProvider>
         </ContactProvider>
