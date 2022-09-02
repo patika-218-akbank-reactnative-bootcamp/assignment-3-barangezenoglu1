@@ -9,10 +9,9 @@ export const ContactList = ({navigation}) => {
       {contacts.map((contact) => {
        return <Contact
           key={contact.id}
-          userName={contact.userName}
+          contactName={contact.contactName}
           profilePhoto={contact.profilePhoto}
           lastSeen={contact.lastSeen}
-          messageList={contact.messageList}
           navigation={navigation}
           setContacts={setContacts}
         />;

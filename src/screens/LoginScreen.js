@@ -60,13 +60,13 @@ export const LoginScreen = ({ navigation }) => {
         </View>
         <View style={styles.nameContainer}>
           <TextInput
-            style={styles.userName}
-            value={user.userName}
-            onChangeText={(text) => setUser({ ...user, userName: text })}
+            style={styles.contactName}
+            value={user.contactName}
+            onChangeText={(text) => setUser({ ...user, contactName: text })}
             placeholder={"Type your name"}
           />
           <TextInput
-            style={styles.userName}
+            style={styles.contactName}
             placeholder={"Type your surname"}
             value={user.userSurname}
             onChangeText={(text) => setUser({ ...user, userSurname: text })}
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     width: 400,
     marginBottom: 30,
   },
-  userName: {
+  contactName: {
     height: 40,
     width: "40%",
     margin: 12,

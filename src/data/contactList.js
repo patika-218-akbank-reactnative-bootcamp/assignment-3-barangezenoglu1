@@ -4,10 +4,9 @@ function contactListGenerator(number) {
   for (let i = 1; i < number; i++) {
     let filledList = {
       id: i,
-      userName: `User${i}`,
+      contactName: `User${i}`,
       profilePhoto: `https://xsgames.co/randomusers/assets/avatars/male/${i}.jpg`,
       lastSeen: "Last seen 2023",
-      messageList: []
     };
     data.push(filledList);
   };

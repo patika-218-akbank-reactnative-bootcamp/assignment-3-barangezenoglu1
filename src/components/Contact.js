@@ -10,7 +10,7 @@ import {
 import Logo from "../assets/telegram.png";
 const windowWidth = Dimensions.get("window").width;
 
-export const Contact = ({ userName, lastSeen, profilePhoto, navigation, messageList}) => {
+export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
 
   const styles = StyleSheet.create({
     container: {
@@ -19,7 +19,7 @@ export const Contact = ({ userName, lastSeen, profilePhoto, navigation, messageL
       flexDirection: "row",
       alignItems: "center",
       padding: 20,
-      borderBottomWidth: userName ? 1 : 0,
+      borderBottomWidth: contactName ? 1 : 0,
       borderBottomColor: "#BFBFBF",
     },
     profilePhoto: {
@@ -32,7 +32,7 @@ export const Contact = ({ userName, lastSeen, profilePhoto, navigation, messageL
       display: "flex",
       flexDirection: "column",
     },
-    userName: {
+    contactName: {
       paddingBottom: 10,
       fontSize: 20,
       fontWeight: "bold",
@@ -47,14 +47,13 @@ export const Contact = ({ userName, lastSeen, profilePhoto, navigation, messageL
 
   return (
     <Pressable style={styles.container} onPress={() => navigation.navigate("ChatDetail", {
-        userName,
+      contactName,
         lastSeen,
         profilePhoto,
-        messageList
     })} >
       <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
       <View style={styles.textContainer}>
-        <Text style={styles.userName}>{userName}</Text>
+        <Text style={styles.contactName}>{contactName}</Text>
         <Text>{lastSeen}</Text>
       </View>
     </Pressable>

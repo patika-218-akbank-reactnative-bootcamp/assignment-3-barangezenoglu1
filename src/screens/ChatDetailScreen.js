@@ -14,32 +14,39 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Foundation from "react-native-vector-icons/Foundation";
 import Entypo from "react-native-vector-icons/Entypo";
 import { ChatInput } from "../components/ChatInput";
-import { ContactContext } from "../context/ContactContext";
 import { TextBox } from "../components/TextBox";
-import { useForceUpdate } from "../hooks/forceUpdate";
+import { MessagesContext } from "../context/MessagesContext";
+import { UserContext } from "../context/UserContext";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export const ChatDetailScreen = ({ route, navigation }) => {
-  const forceUpdate = useForceUpdate();
-  const [inputText, setInputText] = useState('');
-  const { contacts } = useContext(ContactContext);
-  const { userName, profilePhoto, lastSeen, messageList } = route.params;
+  const { messages, setMesages } = useContext(MessagesContext);
+  const [updatedMessages, setUpdatedMessages] = useState(messages);
+  const { user } = useContext(UserContext);
+  const [inputText, setInputText] = useState("");
+  const { contactName, profilePhoto, lastSeen } = route.params;
+  const currentChat = updatedMessages.filter(
+    (currentChat) => currentChat.reciever === contactName
+  );
   const changeTextHandler = (text) => {
-    
-    setInputText(text)
-  }
+    setInputText(text);
+  };
   const handleSubmitInput = (input) => {
+    let sentMessages = updatedMessages;
     let msgObj = {
       id: Math.random(),
-      sender: userName,
+      sender: user.userName,
+      reciever: contactName,
       message: input,
     };
-    messageList.push(msgObj);
-    forceUpdate();
-    setInputText('');
-    return contacts;
-  };
+    sentMessages.push(msgObj);
+    setUpdatedMessages(sentMessages);
+    setInputText("");
+  }; 
+  useEffect(() => {
+    setMesages(updatedMessages);
+  }, [updatedMessages]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -49,7 +56,7 @@ export const ChatDetailScreen = ({ route, navigation }) => {
           </Pressable>
           <Image source={{ uri: profilePhoto }} style={styles.profilePhoto} />
           <View>
-            <Text style={styles.profileName}>{userName}</Text>
+            <Text style={styles.profileName}>{contactName}</Text>
             <Text style={styles.lastSeen}>{lastSeen}</Text>
           </View>
         </View>
@@ -65,11 +72,15 @@ export const ChatDetailScreen = ({ route, navigation }) => {
         style={styles.imageBackground}
       >
         <ScrollView style={{ flex: 1 }}>
-          {messageList.map((message) => {
-            return <TextBox key={message.id} message={message.message} />;
+          {currentChat?.map((msgInfo) => {
+            return <TextBox key={msgInfo?.id} message={msgInfo?.message} />;
           })}
         </ScrollView>
-        <ChatInput onSubmitted={() => handleSubmitInput(inputText)} changeTextHandler={changeTextHandler} inputValue={inputText} />
+        <ChatInput
+          onSubmitted={() => handleSubmitInput(inputText)}
+          changeTextHandler={changeTextHandler}
+          inputValue={inputText}
+        />
       </ImageBackground>
     </View>
   );

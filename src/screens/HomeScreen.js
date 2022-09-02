@@ -1,12 +1,15 @@
-import react from "react";
+import react, { useContext } from "react";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { MessagesContext } from "../context/MessagesContext";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const HomeScreen = ({ navigation }) => {
+  const {messages} = useContext(MessagesContext);
+  console.log('Messages in home scrren', JSON.stringify(messages, undefined, 2));
   return (
     <View>
       <View style={styles.container}>
