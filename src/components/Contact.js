@@ -11,7 +11,6 @@ import Logo from "../assets/telegram.png";
 const windowWidth = Dimensions.get("window").width;
 
 export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
-
   const styles = StyleSheet.create({
     container: {
       width: windowWidth,
@@ -44,7 +43,6 @@ export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
       color: "grey",
     },
   });
-
   return (
     <Pressable style={styles.container} onPress={() => navigation.navigate("ChatDetail", {
       contactName,
