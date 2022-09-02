@@ -3,9 +3,9 @@ import { UserContext } from "./UserContext";
 
 export const UserProvider = ({children}) => {
   const [user, setUser] = useState({
-    userName: null,
-    userSurname: null,
-    userTelephoneNumber: null,
+    userName: '',
+    userSurname: '',
+    userTelephoneNumber: '',
   });
   return (
     <UserContext.Provider
