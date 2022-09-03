@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { View, Text, StyleSheet } from "react-native";
+import { ThemeContext } from "../context/ThemeContext";
+import { darkTheme } from "../data/theme";
 export const CountrySelector = ({
   selectedCountry,
   setSelectedCountry,
   countries,
 }) => {
+  const {theme} = useContext(ThemeContext);
   return (
-    <View style={styles.pickerContainer}>
+    <View style={{...styles.pickerContainer, backgroundColor: theme === darkTheme ? theme.black : ''}}>
       <View>
         <Text>Select Country</Text>
         <Picker

@@ -8,14 +8,20 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { UserContext } from "../context/UserContext";
+import { ThemeContext } from "../context/ThemeContext";
 import TelegramLogo from "../assets/telegram.png";
 import { CountrySelector } from "../components/CountrySelector";
 import { ContryTelephoneSelector } from "../components/CountryTelephoneSelector";
 import { countries } from "../data/countries";
 import { useIsFocused } from "@react-navigation/native";
+import { darkTheme } from "../data/theme";
+
+const windowHeight = Dimensions.get("window").height;
 export const LoginScreen = ({ navigation }) => {
+  const { theme } = useContext(ThemeContext);
   const [selectedCountry, setSelectedCountry] = useState(countries[0].name);
   const [selectedNumber, setSelectedNumber] = useState();
   const { user, setUser } = useContext(UserContext);
@@ -35,20 +41,27 @@ export const LoginScreen = ({ navigation }) => {
     isFocused;
   }, [isFocused]);
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor: theme.white }}>
       <View style={styles.titleLogoContainer}>
         <Image style={styles.logo} source={TelegramLogo} />
         <Text style={styles.title}>Telegram</Text>
         <Text style={styles.description} numberOfLines={2}>
           Please confirm your country code and enter your phone number
         </Text>
-        <View style={styles.pickerContainer}>
+        <View
+          style={{ ...styles.pickerContainer, backgroundColor: theme.white }}
+        >
           <CountrySelector
             countries={countries}
             selectedCountry={selectedCountry}
             setSelectedCountry={setSelectedCountry}
           />
-          <View style={styles.numberContainer}>
+          <View
+            style={{
+              ...styles.numberContainer,
+              backgroundColor: theme === darkTheme ? theme.black : "",
+            }}
+          >
             <ContryTelephoneSelector
               countries={countries}
               selectedNumber={selectedNumber}
@@ -57,6 +70,7 @@ export const LoginScreen = ({ navigation }) => {
             <TextInput
               style={styles.number}
               placeholder={"Type your number"}
+              placeholderTextColor={theme.white}
               value={user.userTelephoneNumber}
               onChangeText={(text) =>
                 setUser({ ...user, userTelephoneNumber: text })
@@ -70,10 +84,12 @@ export const LoginScreen = ({ navigation }) => {
             value={user.userName}
             onChangeText={(text) => setUser({ ...user, userName: text })}
             placeholder={"Type your name"}
+            placeholderTextColor={theme.black}
           />
           <TextInput
             style={styles.contactName}
             placeholder={"Type your surname"}
+            placeholderTextColor={theme.black}
             value={user.userSurname}
             onChangeText={(text) => setUser({ ...user, userSurname: text })}
           />
@@ -82,7 +98,8 @@ export const LoginScreen = ({ navigation }) => {
           <Button
             title="Login"
             onPress={
-              isUserEmpty(user) ? null : () => navigation.navigate("Home")
+              /*  isUserEmpty(user) ? null : */ () =>
+                navigation.navigate("Home")
             }
           />
         </TouchableOpacity>
@@ -93,8 +110,9 @@ export const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    paddingTop: 50,
     alignItems: "center",
+    height: windowHeight,
   },
   titleLogoContainer: {
     alignItems: "center",
