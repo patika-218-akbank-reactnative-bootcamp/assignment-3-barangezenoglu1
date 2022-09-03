@@ -19,6 +19,6 @@ export const ContactedList = ({navigation, contactedList}) => {
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingBottom: 80
+    paddingBottom: 80,
   }
 })

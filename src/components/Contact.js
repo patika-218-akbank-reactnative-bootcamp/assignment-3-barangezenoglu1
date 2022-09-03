@@ -8,9 +8,11 @@ import {
   Pressable,
 } from "react-native";
 import Logo from "../assets/telegram.png";
+import { ThemeContext } from "../context/ThemeContext";
 const windowWidth = Dimensions.get("window").width;
 
 export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
+  const {theme} = useContext(ThemeContext);
   const styles = StyleSheet.create({
     container: {
       width: windowWidth,
@@ -20,6 +22,7 @@ export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
       padding: 20,
       borderBottomWidth: contactName ? 1 : 0,
       borderBottomColor: "#BFBFBF",
+      backgroundColor: theme.white
     },
     profilePhoto: {
       width: 70,
@@ -35,12 +38,12 @@ export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
       paddingBottom: 10,
       fontSize: 20,
       fontWeight: "bold",
-      color: "black",
+      color: theme.black,
     },
     lastSeen: {
       fontSize: 15,
-      fontWeight: 15,
-      color: "grey",
+      fontWeight: "300",
+      color: theme.grey,
     },
   });
   return (
@@ -52,7 +55,7 @@ export const Contact = ({ contactName, lastSeen, profilePhoto, navigation}) => {
       <Image style={styles.profilePhoto} source={{uri: profilePhoto}} />
       <View style={styles.textContainer}>
         <Text style={styles.contactName}>{contactName}</Text>
-        <Text>{lastSeen}</Text>
+        <Text style={styles.lastSeen}>{lastSeen}</Text>
       </View>
     </Pressable>
   );

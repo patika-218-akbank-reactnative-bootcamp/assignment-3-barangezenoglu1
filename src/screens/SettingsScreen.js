@@ -7,10 +7,14 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
 } from "react-native";
 import ProfilePhoto from "../assets/86961373.png";
+import { ThemeContext } from "../context/ThemeContext";
 import { UserContext } from "../context/UserContext";
+const windowHeight = Dimensions.get("window").height;
 export const SettingsScreen = ({ navigation }) => {
+  const { theme } = useContext(ThemeContext);
   const { user, setUser } = useContext(UserContext);
   const [newUserName, setNewUserName] = useState(user.userName);
   const [newUserSurName, setNewUserSurName] = useState(user.userSurname);
@@ -21,21 +25,27 @@ export const SettingsScreen = ({ navigation }) => {
     setUser({ ...user, userName: newUserName, userSurname: newUserSurName });
   }, [newUserName, newUserSurName]);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profile Settings</Text>
+    <View style={{ ...styles.container, backgroundColor: theme.white }}>
+      <Text style={{ ...styles.title, color: theme.black }}>
+        Profile Settings
+      </Text>
       <View style={styles.profilePhotoContainer}>
         <Image source={ProfilePhoto} style={styles.profilePhoto} />
       </View>
-      <Text style={styles.editTitle}>Edit Your Name and Surname</Text>
+      <Text style={{ ...styles.editTitle, color: theme.black }}>
+        Edit Your Name and Surname
+      </Text>
       <TextInput
-        style={styles.userName}
+        style={{ ...styles.userName, color: theme.black }}
         value={user.userName}
         onChangeText={(text) => setNewUserName(text)}
         placeholder={"Type your name"}
+        placeholderTextColor={theme.black}
       />
       <TextInput
         style={styles.userSurname}
         placeholder={"Type your surname"}
+        placeholderTextColor={theme.black}
         value={user.userSurname}
         onChangeText={(text) => setNewUserSurName(text)}
       />
@@ -50,7 +60,12 @@ export const SettingsScreen = ({ navigation }) => {
           title="Logout"
           color={"red"}
           onPress={() => {
-            setUser({...user, userName: "", userSurname: "", userTelephoneNumber: ""});
+            setUser({
+              ...user,
+              userName: "",
+              userSurname: "",
+              userTelephoneNumber: "",
+            });
             navigation.navigate("Login");
           }}
         />
@@ -61,8 +76,9 @@ export const SettingsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    paddingTop: 40,
     alignItems: "center",
+    height: windowHeight,
   },
   title: {
     fontSize: 30,

@@ -1,16 +1,19 @@
 import { useIsFocused } from "@react-navigation/native";
-import react, { useContext, useEffect } from "react";
+import react, { useCallback, useContext, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ContactedList } from "../components/ContactedList";
 import { ContactContext } from "../context/ContactContext";
 import { MessagesContext } from "../context/MessagesContext";
+import { ThemeContext } from "../context/ThemeContext";
+import { darkTheme, lightTheme } from "../data/theme";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const HomeScreen = ({ navigation }) => {
+  const {theme, setTheme} = useContext(ThemeContext)
   const { contacts } = useContext(ContactContext);
   const { messages } = useContext(MessagesContext);
   const isFocused = useIsFocused();
@@ -19,12 +22,19 @@ export const HomeScreen = ({ navigation }) => {
       return message.reciever === contact.contactName;
     });
   });
+  const changeTheme = useCallback(() => {
+    if(theme === lightTheme) {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
+  }, [theme])
   useEffect(() => {
-    isFocused
+    isFocused;
   }, [isFocused]);
   return (
     <View>
-      <View style={styles.container}>
+      <View style={{...styles.container, backgroundColor: theme.white}}>
         <View style={styles.headerContainer}>
           <View style={styles.leftContainer}>
             <Pressable onPress={() => navigation.navigate("Settings")}>
@@ -32,10 +42,15 @@ export const HomeScreen = ({ navigation }) => {
             </Pressable>
             <Text style={styles.title}>Telegram</Text>
           </View>
-          <Ionicons style={styles.searchIcon} name="cloudy-night-outline" />
+          <Pressable onPress={changeTheme}>
+            <Ionicons style={styles.searchIcon} name="cloudy-night-outline" />
+          </Pressable>
         </View>
         <View>
-          <ContactedList navigation={navigation} contactedList={contactedPeople} />
+          <ContactedList
+            navigation={navigation}
+            contactedList={contactedPeople}
+          />
         </View>
         <Pressable
           style={styles.contactsContainer}
@@ -65,7 +80,7 @@ const styles = StyleSheet.create({
   leftContainer: {
     display: "flex",
     flexDirection: "row",
-    alignItems: 'center',
+    alignItems: "center",
     paddingLeft: 5,
   },
   title: {
@@ -73,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   tabIcon: {
     fontSize: 35,
